@@ -1,10 +1,14 @@
 <?php
 
 require "../api_requests.php";
+require_once realpath("../vendor/autoload.php");
+$dotenv = Dotenv\Dotenv::createImmutable("../");
+$dotenv->load();
+
 session_start();
 
-$client_id = getenv('client_id');
-$client_secret = getenv('client_secret');
+$client_id = $_ENV['CLIENT_ID'];
+$client_secret = $_ENV['CLIENT_SECRET'];
 $auth_token = base64_encode("$client_id:$client_secret");
 
 $code = $_GET['code'];

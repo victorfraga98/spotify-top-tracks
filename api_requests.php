@@ -1,6 +1,6 @@
 <?php
 
-function callAPI($method, $url, $headers, $body)
+function callAPI($method, $url, $headers = [], $body = "")
 {
     $curl = curl_init();
 

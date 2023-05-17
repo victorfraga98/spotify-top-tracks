@@ -6,7 +6,6 @@ $url = 'https://api.spotify.com/v1';
 $endpoint = '/me/top/tracks?time_range=long_term&limit=50';
 $token = $_SESSION['user_token'];
 
-
 $options = ['http' => ['header' => 'Authorization: Bearer ' . $token,
                        'method' => 'GET']];
 $context = stream_context_create($options);
