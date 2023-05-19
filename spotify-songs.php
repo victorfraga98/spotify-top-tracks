@@ -2,34 +2,38 @@
 
 session_start();
 
-$url = 'https://api.spotify.com/v1';
-$endpoint = '/me/top/tracks?time_range=long_term&limit=50';
-$token = $_SESSION['user_token'];
+if($_SESSION['user_token']) {
 
-$options = ['http' => ['header' => 'Authorization: Bearer ' . $token,
-                       'method' => 'GET']];
-$context = stream_context_create($options);
-
-$get_response = file_get_contents($url . $endpoint, false, $context);
-$data_object = json_decode($get_response, true);
-
-$top = [];
-
-foreach ($data_object['items'] as $item) {
-    $song_name = $item['name'];
-    $song_artists = [];
-    $song_album = $item['album']['images'][0]['url'];
-    $song_album_link = $item['album']['external_urls']['spotify'];
-
-    foreach($item['artists'] as $artist) {
-        array_push($song_artists, $artist['name']);
-    };
-
-    $top[$song_name] = ['artists' => implode(", ", $song_artists),
-                        'album' => $song_album,
-                        'album_link' => $song_album_link];
+    $url = 'https://api.spotify.com/v1';
+    $endpoint = "/me/top/tracks?time_range=" . $_SESSION['period'] . "&limit=" . $_SESSION['number-songs'];
+    $token = $_SESSION['user_token'];
+    
+    $options = ['http' => ['header' => 'Authorization: Bearer ' . $token,
+                           'method' => 'GET']];
+    $context = stream_context_create($options);
+    
+    $get_response = file_get_contents($url . $endpoint, false, $context);
+    $data_object = json_decode($get_response, true);
+    
+    $top = [];
+    
+    foreach ($data_object['items'] as $item) {
+        $song_name = $item['name'];
+        $song_artists = [];
+        $song_album = $item['album']['images'][0]['url'];
+        $song_album_link = $item['album']['external_urls']['spotify'];
+    
+        foreach($item['artists'] as $artist) {
+            array_push($song_artists, $artist['name']);
+        };
+    
+        $top[$song_name] = ['artists' => implode(", ", $song_artists),
+                            'album' => $song_album,
+                            'album_link' => $song_album_link];
+    }
+} else {
+    echo "Oh! Something went wrong.";
 }
-
 
 ?>
 
@@ -55,5 +59,6 @@ foreach ($data_object['items'] as $item) {
             </li>
         <?php $i++; endforeach ?>
         </ol>
+        <div class="center"><a href="." role="button" class="btn">Back</a></div>
     </body>
 </html>

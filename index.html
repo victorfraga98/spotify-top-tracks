@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Victor Fraga</title>
+        <link rel="stylesheet" href="stylesheets/styles.css">
+    </head>
+    <body class="center purple-background">
+        <h1 class="green-title">Welcome to Top Tracks Recommended Playlist</h1>
+        <form action="spotify-auth.php" method="POST">
+            <div class="form-group">
+                <label for="period" class="song-title">Period</label>
+                <select name="period" class="select">
+                    <option value="short_term">Last 30 days</option>
+                    <option value="medium_term">Last 6 months</option>
+                    <option value="long_term" selected>Lifetime</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="number-songs" class="song-title">Number of songs</label>
+                <input name="number-songs" type="number" placeholder="quantity" min="0" max="50" class="fill" required>
+            </div>
+            <input class="btn" type="submit" name="submit" value="See top tracks" id="submit" >
+        </form>
+    </body>
+</html>
